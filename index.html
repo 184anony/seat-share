@@ -7,22 +7,32 @@
   <link rel="stylesheet" href="src/styles.css">
 </head>
 <body>
-  <header>
-    <h1>研修席シェア</h1>
-    <p id="subtitle">席を選択して、画像をSlackに貼り付けます。</p>
-  </header>
+  <main class="app">
+    <header class="app-header">
+      <h1>研修席シェア</h1>
+      <p class="subtitle">席を選択して、画像をSlackに貼り付けます。</p>
+    </header>
 
-  <main>
-    <section class="island-section">
-      <h2 id="island-name"></h2>
-      <div class="island-container">
+    <section class="card">
+      <fieldset class="segmented" aria-label="長机の数">
+        <legend>長机の数</legend>
+        <label>
+          <input type="radio" name="deskCount" value="2">
+          <span>2つ</span>
+        </label>
+        <label>
+          <input type="radio" name="deskCount" value="3" checked>
+          <span>3つ</span>
+        </label>
+      </fieldset>
+
+      <div class="canvas-wrap">
         <canvas id="island-canvas"></canvas>
       </div>
-    </section>
 
-    <section class="controls">
-      <p class="status">選択中: <span id="selected-seat">なし</span></p>
-      <button id="copy-btn" type="button" disabled>画像をクリップボードにコピー</button>
+      <div class="actions">
+        <button id="copy-btn" type="button" disabled>画像をコピー</button>
+      </div>
       <p class="copy-status" id="copy-status" aria-live="polite"></p>
     </section>
   </main>
