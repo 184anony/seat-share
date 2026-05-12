@@ -24,6 +24,9 @@
 
 * { box-sizing: border-box; }
 
+/* HTML の hidden 属性を、class ベースの display ルールが上書きしないよう強制する */
+[hidden] { display: none !important; }
+
 html, body {
   margin: 0;
   padding: 0;
