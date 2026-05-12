@@ -5,11 +5,8 @@
 //   - 3 desk : 縦机2つ + 横机1つ。横机は上 or 下を選べる。
 //
 // 各長机の長辺1つに椅子を2つ配置。
-//
-// ① 会場ビューが入ったので、班名（班A, 班B, ...）と席番号(1〜)もここで割り当てる。
-// 実際の研修会場の名付けと一致しない可能性はあるが、デフォルトとして安定したラベルを返す。
 
-const ISLAND_LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+export const ISLAND_LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
 export function makeIsland({ id, name, deskCount = 3, horizontalPosition = 'top' } = {}) {
   const seat = (n) => ({ id: `${id}-s${n}`, label: String(n) });
@@ -110,4 +107,24 @@ export function makeVenue({
     islands,
     config: { islandCount: count, deskCount, horizontalPosition },
   };
+}
+
+// 島の自動配置（% 座標、ステージ内に2D配置）。
+// 編集モードで個別にドラッグして上書きされた位置は、別途 config.positions に保持。
+export function getDefaultPositions(islandCount) {
+  const n = Math.max(1, islandCount | 0);
+  // 横向きをやや優先したグリッド
+  const cols = Math.max(1, Math.min(n, Math.ceil(Math.sqrt(n * 1.3))));
+  const rows = Math.ceil(n / cols);
+  const positions = {};
+  for (let i = 0; i < n; i++) {
+    const col = i % cols;
+    const row = Math.floor(i / cols);
+    const id = ISLAND_LETTERS[i];
+    positions[id] = {
+      x: ((col + 0.5) / cols) * 100,
+      y: ((row + 0.5) / rows) * 100,
+    };
+  }
+  return positions;
 }

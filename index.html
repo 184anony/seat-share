@@ -22,48 +22,62 @@
       </div>
     </header>
 
-    <section id="view-venue" class="view">
-      <div class="view-header">
-        <span class="view-step">STEP 1</span>
-        <h2>会場</h2>
-        <p class="hint">問題のある参加者がいる班を選んでください</p>
-      </div>
-      <div id="venue-container" class="venue-container"></div>
-    </section>
+    <div id="views-stack" class="views-stack">
+      <section id="view-venue" class="view view-venue">
+        <div class="view-header">
+          <span class="view-step">STEP 1</span>
+          <h2>会場</h2>
+          <p class="hint">問題のある参加者がいる班を選んでください</p>
+        </div>
+        <div class="venue-toolbar">
+          <button id="edit-btn" type="button" class="chip-btn" data-on-label="完了" data-off-label="配置を編集">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+            </svg>
+            <span class="chip-btn-label">配置を編集</span>
+          </button>
+          <button id="reset-positions-btn" type="button" class="text-btn" hidden>
+            位置をリセット
+          </button>
+        </div>
+        <div id="venue-container" class="venue-container"></div>
+      </section>
 
-    <section id="view-island" class="view" hidden>
-      <nav class="breadcrumb" aria-label="現在地">
-        <button id="back-btn" class="text-btn" type="button">
-          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <polyline points="15 18 9 12 15 6"></polyline>
-          </svg>
-          会場
-        </button>
-        <span class="breadcrumb-sep" aria-hidden="true">/</span>
-        <span id="current-island-name" class="breadcrumb-current"></span>
-      </nav>
-      <div class="view-header">
-        <span class="view-step">STEP 2</span>
-        <p class="hint">問題のある席をタップしてください</p>
-      </div>
-      <div class="canvas-wrap">
-        <canvas id="island-canvas"></canvas>
-      </div>
-      <div class="actions">
-        <button id="copy-btn" type="button" disabled>
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-          </svg>
-          画像をコピー
-        </button>
-      </div>
-      <p class="copy-status" id="copy-status" aria-live="polite"></p>
-    </section>
+      <section id="view-island" class="view view-island">
+        <nav class="breadcrumb" aria-label="現在地">
+          <button id="back-btn" class="text-btn" type="button">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+            会場
+          </button>
+          <span class="breadcrumb-sep" aria-hidden="true">/</span>
+          <span id="current-island-name" class="breadcrumb-current"></span>
+        </nav>
+        <div class="view-header">
+          <span class="view-step">STEP 2</span>
+          <p class="hint">問題のある席をタップしてください</p>
+        </div>
+        <div class="canvas-wrap">
+          <canvas id="island-canvas"></canvas>
+        </div>
+        <div class="actions">
+          <button id="copy-btn" type="button" disabled>
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+            画像をコピー
+          </button>
+        </div>
+        <p class="copy-status" id="copy-status" aria-live="polite"></p>
+      </section>
+    </div>
   </div>
 
   <dialog id="settings-dialog" class="dialog" aria-labelledby="settings-title">
-    <form id="settings-form" class="dialog-content">
+    <form id="settings-form" method="dialog" class="dialog-content">
       <h3 id="settings-title" class="dialog-title">会場の設定</h3>
 
       <div class="form-row form-row-col">
@@ -89,19 +103,15 @@
         </label>
       </fieldset>
 
-      <fieldset id="field-horizontal-position" class="form-row form-row-radio">
-        <legend class="form-label">横机の位置（3机のみ）</legend>
+      <fieldset id="field-horizontal-position" class="form-row form-row-radio" hidden>
+        <legend class="form-label">横机の位置</legend>
         <label>
           <input type="radio" name="horizontalPosition" value="top">
-          <span class="radio-card">
-            <span class="radio-card-title">上</span>
-          </span>
+          <span class="radio-card"><span class="radio-card-title">上</span></span>
         </label>
         <label>
           <input type="radio" name="horizontalPosition" value="bottom">
-          <span class="radio-card">
-            <span class="radio-card-title">下</span>
-          </span>
+          <span class="radio-card"><span class="radio-card-title">下</span></span>
         </label>
       </fieldset>
 
