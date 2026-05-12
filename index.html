@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>研修席シェア</title>
+  <link rel="stylesheet" href="src/styles.css">
+</head>
+<body>
+  <header>
+    <h1>研修席シェア</h1>
+    <p id="subtitle">席を選択して、画像をSlackに貼り付けます。</p>
+  </header>
+
+  <main>
+    <section class="island-section">
+      <h2 id="island-name"></h2>
+      <div class="island-container">
+        <canvas id="island-canvas"></canvas>
+      </div>
+    </section>
+
+    <section class="controls">
+      <p class="status">選択中: <span id="selected-seat">なし</span></p>
+      <button id="copy-btn" type="button" disabled>画像をクリップボードにコピー</button>
+      <p class="copy-status" id="copy-status" aria-live="polite"></p>
+    </section>
+  </main>
+
+  <script type="module" src="src/app.js"></script>
+</body>
+</html>
